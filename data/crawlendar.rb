@@ -3,32 +3,26 @@ require "net/https"
 require "json"
 
 @calendar_feeds = [
-  "campus-party.com.br_8j7p9dq2fnj2pb3ig8jl0pgbvs%40group.calendar.google.com",
-  "campus-party.com.br_sqmkibctf6n71mf9gkgcfgutvk%40group.calendar.google.com",
-  "conteudoscomunidades%40campus-party.com.br",
-  "campus-party.com.br_krqbl9dii9mppjmbem6d3ls464%40group.calendar.google.com",
-  "campus-party.com.br_vq66jn45r6qpq280i5rqmhavso%40group.calendar.google.com",
-  "campus-party.com.br_dvankcpsoo9ap46jaftnmpls5c%40group.calendar.google.com",
-  "campus-party.com.br_g51h4uhd1l7hg158cra8pjbga8%40group.calendar.google.com",
-  "campus-party.com.br_ffpg3l9ve20j9ifjts4p71h6k0%40group.calendar.google.com",
-  "campus-party.com.br_clmb16l2tprnuoph8ass3oaom4%40group.calendar.google.com",
-  "campus-party.com.br_evu80eej3n6bq1elelo9vvjn1o%40group.calendar.google.com",
-  "campus-party.com.br_dqgcott7iq459vshe3ttks0ip8%40group.calendar.google.com",
-  "campus-party.com.br_qdnmtupst3iri5mat77gire4og%40group.calendar.google.com",
-  "campus-party.com.br_sbm5pftqc9lfsnfr667d0kfmug%40group.calendar.google.com",
-  "campus-party.com.br_bpq3je4mahd0p9srqhdrviunqg%40group.calendar.google.com"
+  "campus-party.com.br_l6ecjd1kqb3u48a2u3mobblljo%40group.calendar.google.com",
+  "campus-party.com.br_a42l571rjt75t0e906uma1mqec%40group.calendar.google.com",
+  "campus-party.com.br_fss4977vco3a3vr2tp800jfskg%40group.calendar.google.com",
+  "campus-party.com.br_2mt0kll3lt3uecboccgml4p5rg%40group.calendar.google.com",
+  "campus-party.com.br_ao1mcr7t3mnnqctjuo504m289o%40group.calendar.google.com",
+  "campus-party.com.br_v7am8sts84s1qrhk3h4rhsejdk%40group.calendar.google.com",
+  "campus-party.com.br_sb1t4qv23ai050un7hpsk4k0t8%40group.calendar.google.com",
+  "campus-party.com.br_c0i8atisofqbefkkuhdkrrn5r4%40group.calendar.google.com",
+  "campus-party.com.br_9j8hb2nn9ueqgl2799sgrnlres%40group.calendar.google.com"
 ]
 
 
 @calendar_feeds.each do |feed|
-
   puts "Getting feed: " + feed
-  
+
   gdata_api_url = "https://www.google.com/calendar/feeds/" +
                   feed +
                   "/public/full-noattendees?alt=json&orderby=starttime" +
-                  "&start-min=2014-01-27T00:00:00-02:00" +
-                  "&start-max=2014-02-02T23:59:59-02:00" +
+                  "&start-min=2014-07-23T00:00:00-02:00" +
+                  "&start-max=2014-07-27T23:59:59-02:00" +
                   "&futureevents=true&max-results=300"
 
   uri = URI.parse(gdata_api_url);
@@ -40,7 +34,7 @@ require "json"
   req["Host"] = uri.host
   response = http.request(req)
 
-  if response.code == "200" 
+  if response.code == "200"
     agenda = JSON.parse(response.body)
 
     title = agenda["feed"]["title"]["$t"]
@@ -53,5 +47,4 @@ require "json"
   else
     puts "  Erro! #{response.code.to_s} - #{response.body}"
   end
-
 end
