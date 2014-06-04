@@ -4,10 +4,8 @@ require "time"
 # pedidos possíveis de ser feito
 WHEN = %w(agora depois)
 # palcos do evento
-TRACKS = %w(hypatia   arquimedes comunidades  crossspace 
-            galileu   gutemberg  michelangelo principal 
-            stadium   pitagoras  socrates     workshop1 
-            workshop2 workshop3)
+TRACKS = %w(principal    galileu    michelangelo    pitagoras
+            hypatia    stadium    crossspace    workshop1    workshop2)
 
 module OquevernaCP
   class EventSuggest
@@ -30,12 +28,12 @@ module OquevernaCP
       now  = Time.now.to_i
       event_next      = index.select { |x| x >= now.to_s }.first
       event_happening = index.select { |x| x <= now.to_s }.last
-      
+
       if event_next.nil? # campus party is over
-        return tweet_text(status.user.screen_name, 
-                          "A Campus Party já terminou. Até o ano que vem...", 
+        return tweet_text(status.user.screen_name,
+                          "A Campus Party já terminou. Até o ano que vem...",
                           nil, "http://www.campus-party.com.br/")
-      else 
+      else
         event_happening = (event_happening.nil? ? 0 : event_happening.to_i )
         event_next = event_next.to_i
         # use heuristic if user have no preference of time
@@ -45,11 +43,11 @@ module OquevernaCP
           # if user wants to know what's happening now
           if _when.first == "agora"
             if event_happening == 0
-              return tweet_text(status.user.screen_name, 
-                                "A Campus Party ainda não começou. Tente perguntar o que vem #depois :-)", 
+              return tweet_text(status.user.screen_name,
+                                "A Campus Party ainda não começou. Tente perguntar o que vem #depois :-)",
                                 nil, "http://www.campus-party.com.br/")
             else
-              decision = ((event_next - now < 60*10) ? event_next : event_happening) 
+              decision = ((event_next - now < 60*10) ? event_next : event_happening)
             end
           # if user wants to know what comes after
           else
